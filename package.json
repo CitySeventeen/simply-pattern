@@ -1,0 +1,31 @@
+{
+  "name": "simply-pattern",
+  "version": "0.0.0",
+  "description": "Create and use pattern without knowledge. The purpose is to bring the javascript design pattern closer to a real OO design pattern.",
+  "scripts": {
+    "test": "NODE_ENV=dev node ./node_modules/mocha/bin/mocha",
+    "windows test": "SET NODE_ENV=dev& node ./node_modules/mocha/bin/mocha"
+  },
+  "keywords": [
+    "util",
+    "functional",
+    "pattern",
+    "design pattern",
+    "injector, injection, immutable pattern"
+  ],
+  "author": "Raffaele Balsamo <raffaelebalsamo91@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/CitySeventeen/simply-pattern/issues"
+  },
+  "homepage": "https://github.com/CitySeventeen/simply-pattern#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CitySeventeen/simply-pattern.git"
+  },
+  "main": "./index.js",
+  "contributors": [],
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  }
+}

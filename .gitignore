@@ -1,0 +1,5 @@
+# file di progetto IDE
+nbproject
+
+# Dipendenze progetto e file lock
+node_modules/
