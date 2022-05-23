@@ -1,6 +1,9 @@
-/* 
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Other/javascript.js to edit this template
- */
+const creational = require('./src/creational/');
+
+const patterns = {};
+for(let pattern in creational)
+  patterns[pattern] = creational[pattern];
+  
+module.exports = patterns;
 
 
