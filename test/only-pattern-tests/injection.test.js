@@ -11,10 +11,5 @@ module.exports.builder = t.arg_builder;
 
 
 describe('Injection pattern', () => {
-  it.skip('injection è una funzione', () => {
-    
-  });
-  it.skip('', () => {
-    
-  });
+
 });

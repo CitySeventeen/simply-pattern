@@ -6,6 +6,7 @@ const {expect, assert} = require('chai');
 const export_patterns = require(`../index.js`);
 
 const t = {patterns: ['injection'], builders: {}};
+t.builders = require('./support.test.js').builder_for_pattern;
 
 Object.freeze(t);
 
@@ -18,7 +19,8 @@ describe('Pattern exported', () => {
   }
   for(let pattern of t.patterns){
     it(`Pattern ${pattern} is a function and works only with new`, () => {
-      
+      expect(pattern).to.be.a('function');
+      expect(()=>{export_patterns[pattern](t.builder[pattern]);}).to.throw('pattern must be called with new');;
     });
     
   }
