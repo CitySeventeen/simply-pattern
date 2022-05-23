@@ -8,5 +8,6 @@
     "diff": true,
     "colors": true,
     "reporter": "spec",
-    "inline-diffs": true
+    "inline-diffs": true,
+    "recursive": true
   }
