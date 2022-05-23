@@ -4,21 +4,29 @@ const AMBIENTE = process.env.NODE_ENV;
 const {expect, assert} = require('chai');
 
 const DIRNAME_PATTER_TEST = __dirname.concat('/only-pattern-tests/');
-const t = {list_files: retrieveFilesName(DIRNAME_PATTER_TEST), pattern: {}};
-for(let file of t.list_files){
-  t.pattern[file] = require(DIRNAME_PATTER_TEST.concat(file));
+const t = {list_test_files: retrieveFilesName(DIRNAME_PATTER_TEST), builder_for_pattern: {}};
+for(let file of t.list_test_files){
+  let pattern_name = retrievePatternNameFromFileTestName(file);
+  t.builder_for_pattern[pattern_name] = require(DIRNAME_PATTER_TEST.concat(file));
 }
-console.dir(t);
+module.exports.builder_for_pattern = t.builder_for_pattern;
 Object.freeze(t);
 
 
 describe('Assurance that test settings are ok', () => {
   it('Each test exports a setting for build a pattern', () => {
-    expect(t.pattern).to.not.eql({});
-    for(let test in t.pattern){
-      let exports_file = t.pattern[test];
+    expect(t.builder_for_pattern).to.not.eql({});
+    for(let test in t.builder_for_pattern){
+      let exports_file = t.builder_for_pattern[test];
       expect(exports_file).to.have.property('builder');
       expect(exports_file.builder).to.be.an('array');
+    }
+  });
+  it('Each test file in only-pattern-tests has a <name-pattern>.test.js format', () => {
+    expect(t.list_test_files).to.not.eql([]);
+    for(let file of t.list_test_files){
+      expect(file).to.have.string('.test.js');
+      expect(file.replace('.test.js', '')).to.not.have.string('.');
     }
   });
 });
@@ -32,4 +40,8 @@ function retrieveFilesName(path){
   console.dir(list_files);
   const only_names = list_files.map(elem => {return elem.name;});
   return only_names;
+}
+
+function retrievePatternNameFromFileTestName(test_file_name){
+  return test_file_name.replace('.test.js', '');
 }
