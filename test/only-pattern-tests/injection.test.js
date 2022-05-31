@@ -21,12 +21,22 @@ describe('Injection pattern', () => {
   });
   describe('wrong arguments throws error', () => {
     const non_function_or_object = [0,-5,8,true, false, undefined, 'string'];
+    const non_object = [0,-5,8,true, false, undefined, 'string', function(){}, []];
     for (let wrong of [...non_function_or_object]) {
       it('entity wrong type throws error', () => {
         let args = replaceArgumentByPosition(t.right_args, 1, wrong);
         expect(()=>{injection(...args);}).to.throw(errors.entity_wrong_type);
       });
-      
+    }
+    for (let wrong of [...non_object]) {
+      it('where_inject wrong type throws error', () => {
+        let args = replaceArgumentByPosition(t.right_args, 2, wrong);
+        expect(()=>{injection(...args);}).to.throw(errors.whereinject_wrong_type);
+      });
+      it('dependency wrong type throws error', () => {
+        let args = replaceArgumentByPosition(t.right_args, 3, wrong);
+        expect(()=>{injection(...args);}).to.throw(errors.dependency_wrong_type);
+      });
     }
   });
   describe('injection with apply to function', () => {
