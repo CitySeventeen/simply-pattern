@@ -4,3 +4,10 @@
  * 
  */
 
+const {errors, check} = require('../errors.js');
+
+function injection(entity){
+  check.error(new.target === true, errors.pattern_called_with_new({newtarget: new.target}).message);
+  
+}
+module.exports = injection;
