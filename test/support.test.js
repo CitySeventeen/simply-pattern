@@ -37,7 +37,6 @@ function retrieveFilesName(path){
   const list_files = list_all.filter(elem => {
     let type = Object.getOwnPropertySymbols(elem)[0]; return elem[type] === 1;
   });
-  console.dir(list_files);
   const only_names = list_files.map(elem => {return elem.name;});
   return only_names;
 }
