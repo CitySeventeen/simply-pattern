@@ -4,7 +4,7 @@ const {expect, assert} = require('chai');
 
 const errors = require(`../index.js`).ERRORS.message;
 
-const export_patterns = require(`../index.js`).patterns;
+const export_patterns = require(`../index.js`);
 
 const t = {patterns: ['injection'], builders: {}};
 t.builders = require('./support.test.js').builder_for_pattern;
@@ -22,7 +22,7 @@ describe('Pattern exported', () => {
     let pattern_function = export_patterns[pattern];
     it(`Pattern ${pattern} is a function and doesnt work with new`, () => {
       expect(pattern_function).to.be.a('function');
-      expect(()=>{pattern_function(t.builders[pattern]);}).to.throw(errors.pattern_called_with_new);;
+      expect(()=>{new pattern_function(t.builders[pattern]);}).to.throw(errors.pattern_called_with_new);;
     });
     
   }
