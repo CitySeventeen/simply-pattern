@@ -33,7 +33,7 @@ console.log(entity_with_dep_injected(2,3)) // = 6
 ### where_inject as a function
 It must to be return an object like previously.
 ```js
-const where_inject = function(dep){
+const where_inject = function(...dep){
           return {apply(...args){return [dep[0], dep[1], ...args}}
 }
 const entity_with_dep_injected = injection(entity, where_inject, depA, depB)
