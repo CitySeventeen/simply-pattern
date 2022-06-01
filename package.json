@@ -11,7 +11,9 @@
     "functional",
     "pattern",
     "design pattern",
-    "injector, injection, immutable pattern"
+    "injector",
+    "injection",
+    "immutable pattern"
   ],
   "author": "Raffaele Balsamo <raffaelebalsamo91@gmail.com>",
   "bugs": {
