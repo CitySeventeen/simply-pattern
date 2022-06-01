@@ -30,7 +30,7 @@ const t = {right_args_without_dep: [function entity(dep, ...args){},
                                                           ],   
               args_for_nested_trap_dependencies: [class user_class{
                                                               constructor(...args){this.arg_construct = args;}
-                                                              static method(...args){args;}
+                                                              static method(...args){return args;}
                                                           },
                                                           {construct(...args){return ['dip3', 'dip4', ...args];},
                                                            get: {apply(...args){return ['dip1', 'dip2', ...args];}}}
@@ -53,9 +53,6 @@ describe('Injection pattern', () => {
       let args = replaceArgumentByPosition(t.right_args_with_dep, 3, arg_dep);
       expect(()=>{injection(...args);}).to.not.throw();
     }
-  });
-  it('trap different from apply or construct or throws error', () => {
-    expect(()=>{injection(function(){}, {thisTrapDoesntExist(...args){return ['dip1', ...args]}});}).to.throw(errors.wrong_trap_name);
   });
   it('entity returned by injection function is a proxy', () => {
     expect(util.types.isProxy(injection(...t.args_for_apply_dependencies))).to.be.true;
@@ -104,7 +101,7 @@ describe('Injection pattern', () => {
       });
     }
 
-    it('where_inject wrong type with dependencies present throws error', () => {
+    it('where_inject wrong type with dependencies presents throw error', () => {
       let args = replaceArgumentByPosition(t.right_args_with_dep, 2, {});
       expect(()=>{injection(...args);}).to.throw(errors.dependency_whereinject_wrong_type);
     });
@@ -115,12 +112,21 @@ describe('Injection pattern', () => {
           const entity_with_dependency_injected = injection(function(){}, where_inject);
           expect(()=>{entity_with_dependency_injected('arg1', 'arg2');}).to.throw(errors.wrong_list_returned_by_trap);
         });
-      
     });
-  });
-  describe('injection with apply to function', () => {
-    it.skip('inject args dependency', () => {
-      
+    describe('where inject with wrong element', () => {
+      it('trap name that is a sub handler doesnt throw error', () => {
+        expect(()=>{injection(function(){}, {get: {apply(...args){return ['dip1', 'dip2', ...args];}}});}).to.not.throw();
+      });
+      it('callback trap different from apply or construct throws error', () => {
+        expect(()=>{injection(function(){}, {thisTrapDoesntExist(...args){return ['dip1', ...args];}});}).to.throw(errors.wrong_trap_name);
+        expect(()=>{injection(function(){}, {get(...args){return ['dip1', ...args];}});}).to.throw(errors.wrong_trap_name);
+      });
+      it.skip('more of one callback customed for trap name throws error', () => {
+        
+      });
+      it.skip('more same subhandler for trap name doesnt throw error', () => {
+        
+      });
     });
   });
 });

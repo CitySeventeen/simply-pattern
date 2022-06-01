@@ -31,12 +31,32 @@ function buildHandlerForProxy(where_inject, dependencies){
   let handler;
   if(isArrayEmpty(dependencies)) handler = where_inject;
   else handler = where_inject(...dependencies);
+  const handler_for_inject_dep = buildRecursive(chooseTrapWithNewArgsList, handler);
+  return handler_for_inject_dep;
+}
+
+function buildRecursive(chooseTrap, handler){
   const handler_for_inject_dep = {};
+
   for(let trap_name in handler){
+    handler_for_inject_dep[trap_name] = [];
     let args_list_callback = handler[trap_name];
-    handler_for_inject_dep[trap_name] = chooseTrapWithNewArgsList(trap_name, args_list_callback);
+    if(!Array.isArray(args_list_callback))
+       handler_for_inject_dep[trap_name].push(assignCallbackForTrap(args_list_callback, trap_name, chooseTrap, buildRecursive));
+    else{
+      for(let element of args_list_callback)
+        handler_for_inject_dep[trap_name].push(assignCallbackForTrap(element, trap_name, chooseTrap, buildRecursive));
+    }
   }
   return handler_for_inject_dep;
 }
 
+function assignCallbackForTrap(handler_or_callback, trap_name, chooseTrap, functionRecursive){
+  check.assert(!Array.isArray(handler_or_callback));
+  if(typeof handler_or_callback === 'object')
+     return functionRecursive(chooseTrap, handler_or_callback);
+  else if(typeof handler_or_callback === 'function')
+    return chooseTrap(trap_name, handler_or_callback);
+  else throw errors.wrong_element_in_handler(handler_or_callback);;
+}
 module.exports = injection;
