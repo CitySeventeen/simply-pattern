@@ -129,6 +129,14 @@ describe('Injection pattern', () => {
       });
     });
   });
+  describe('default callback for wher_inject', () => {
+    const returnArguments = function(...args){return args;};
+    it('first dep', () => {
+      let value_with_injected = injection(returnArguments, injection.FIRSTDEP, 'dep1', 'dep2');
+      expect(value_with_injected('arg1', 'arg2', 'arg3')).to.eql(['dep1', 'dep2', 'arg1', 'arg2', 'arg3']);
+    });
+    
+  });
 });
 
 function replaceArgumentByPosition(args_list, index, arg){

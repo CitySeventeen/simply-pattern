@@ -59,4 +59,15 @@ function assignCallbackForTrap(handler_or_callback, trap_name, chooseTrap, funct
     return chooseTrap(trap_name, handler_or_callback);
   else throw errors.wrong_element_in_handler(handler_or_callback);;
 }
+
 module.exports = injection;
+
+
+const where_inject_cb = {
+  FIRSTDEP: (...dep)=>{return {    apply(...args){return [...dep, ...args];},
+                            construct(...args){return [...dep, ...args];}};}
+};
+
+for(let cb_name in where_inject_cb){
+  module.exports[cb_name] = where_inject_cb[cb_name];
+}
