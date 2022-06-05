@@ -3,8 +3,9 @@
   "version": "0.2.0",
   "description": "Create and use pattern without knowledge. The purpose is to bring the javascript design pattern closer to a real OO design pattern.",
   "scripts": {
-    "test": "NODE_ENV=dev node ./node_modules/mocha/bin/mocha",
-    "windows test": "SET NODE_ENV=dev& node ./node_modules/mocha/bin/mocha"
+    "test": "NODE_ENV=prod node ./node_modules/mocha/bin/mocha",
+    "windows test": "SET NODE_ENV=dev& node ./node_modules/mocha/bin/mocha",
+    "dev test": "NODE_ENV=dev node ./node_modules/mocha/bin/mocha"
   },
   "keywords": [
     "util",
